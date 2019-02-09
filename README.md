@@ -1,2 +1,2 @@
 # SuperManageSystem
-一个基于vue+elementui+axios+nodejs+mysql的后台管理系统
+一个基于vue+vue-router+elementui+axios+nodejs+mysql实现的后台管理系统项目

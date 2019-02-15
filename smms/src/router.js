@@ -18,12 +18,12 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'index',
+      // name: 'index',
       component: () => import('./views/Index/Index.vue'), //引入后端首页组件
       children:[
         {
           path: '',
-          name: 'home',
+          // name: 'home',
           component: () => import('./views/Home/Home.vue')
         },
         {

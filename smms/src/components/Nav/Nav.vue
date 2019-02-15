@@ -59,6 +59,7 @@ export default {};
 <style lang="less">
 .el-menu {
   border: none;
+  color: #fff;
   .el-submenu {
     .el-submenu__title {
       color: #fff;
@@ -67,6 +68,7 @@ export default {};
   }
   .el-menu-item {
     color: #fff;
+    padding-left: 5px!important;
   }
 }
 </style>

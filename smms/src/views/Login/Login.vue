@@ -38,7 +38,7 @@ export default {
             var specialKey ="[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'";
             for (var i = 0; i < str.length; i++) {
                 if (specialKey.indexOf(str.substr(i, 1)) != -1) {
-                return false;
+                    return false;
                 }
             }
             return true;
@@ -76,29 +76,29 @@ export default {
         return {
             //登录表单的数据
             loginForm: {
-            username: '',
-            password: '',
-            checkPwd: ''
+                username: '',
+                password: '',
+                checkPwd: ''
             },
             //验证规则
             rules: {
-            //验证用户名
-            username:[
-                //非空验证
-                { required: true, message: '请输入账号', trigger: 'blur' },
-                //长度验证
-                { min: 3, max: 6, message: '账号长度在 3 - 6 位', trigger: 'blur' }
-            ],
-            //验证密码
-            password:[
-                //非空验证
-                { required: true, validator:pass, trigger: 'blur' },
+                //验证用户名
+                username:[
+                    //非空验证
+                    { required: true, message: '请输入账号', trigger: 'blur' },
+                    //长度验证
+                    { min: 3, max: 6, message: '账号长度在 3 - 6 位', trigger: 'blur' }
                 ],
-            //验证确认密码
-            checkPwd:[
-                //非空验证
-                { required: true, validator:checkPass, trigger: 'blur' }
-            ]
+                //验证密码
+                password:[
+                    //非空验证
+                    { required: true, validator:pass, trigger: 'blur' },
+                    ],
+                //验证确认密码
+                checkPwd:[
+                    //非空验证
+                    { required: true, validator:checkPass, trigger: 'blur' }
+                ]
             }
         };
     },

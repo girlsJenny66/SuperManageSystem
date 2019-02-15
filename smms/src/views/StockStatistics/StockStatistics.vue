@@ -1,6 +1,13 @@
 <template>
     <div class="stock-statistics">
-        进货统计页面
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>进货统计</span>
+            </div>
+            <div class="text item">
+                内容
+            </div>
+        </el-card>
     </div>
 </template>
 
@@ -11,5 +18,14 @@ export default {
 </script>
 
 <style lang="less">
-
+.stock-statistics{
+    .el-card {
+        .el-card__header {
+        text-align-last: left;
+        font-size: 18px;
+        font-weight: 600;
+        background-color: #f1f1f1;
+        }
+    }
+}
 </style>

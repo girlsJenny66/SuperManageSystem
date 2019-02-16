@@ -344,7 +344,7 @@ export default {
                 type:"success",
                 message:reason
               })
-              //刷新列表
+              //刷新列表(重新加载页面)
               this.getAccountListByPage();  
             }else{
               this.$message.error(reason)

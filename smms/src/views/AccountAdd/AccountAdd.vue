@@ -38,6 +38,9 @@
 </template>
 
 <script>
+//引入qs库
+import qs from "qs";
+
 export default {
   data() {
     // 包含特殊字符的函数
@@ -121,7 +124,6 @@ export default {
       this.$refs[formName].validate(valid => {
         //如果所有验证通过，valid就是true
         if (valid) {
-          alert("恭喜你,前端验证通过,可以提交给后端");
           //后续吧收集的账号和密码 一起发送给后台 验证账号和密码的正确性
           //收集账号和密码
           const params = {
@@ -129,14 +131,32 @@ export default {
             password: this.accoutAddForm.password,
             usergroup:this.accoutAddForm.userGroup
           };
-          //发送请求 把参数发给后端
-          //console.log(params);
 
-          //跳转到账号管理页面
-          this.$router.push("/accountmanage")
+          //使用axios发送数据给后端
+          this.axios.post('http://127.0.0.1:999/account/accountadd',qs.stringify(params))
+           .then(response => {
+             //console.log(response.data); 
+             //接收后端传送的错误码和提示信息
+             let { error_code , reason } = response.data;
+             //根据后端响应的数据判断
+             if(error_code === 0){
+               //弹出成功的提示
+               this.$message({
+                 type:"success",
+                 message: reason
+               })
+               //跳转到账号管理页面
+               this.$router.push("/accountmanage")
+             }else{
+               // 弹出失败的提示
+                this.$message.error(reason);
+             }           
+           })
+           .catch(err => {
+             console.log(err);           
+           })         
         } else {
           //否则就是false
-          alert("sorry,前端验证失败！");
           return false;
         }
       });

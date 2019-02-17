@@ -15,8 +15,7 @@
           :data="accountData"
           tooltip-effect="dark"
           style="width: 100%"
-          @selection-change="handleSelectionChange"
-        >
+          @selection-change="handleSelectionChange">
           <el-table-column
             type="selection"
             width="55"
@@ -344,7 +343,7 @@ export default {
                 type:"success",
                 message:reason
               })
-              //刷新列表(重新加载页面)
+              //刷新列表
               this.getAccountListByPage();  
             }else{
               this.$message.error(reason)

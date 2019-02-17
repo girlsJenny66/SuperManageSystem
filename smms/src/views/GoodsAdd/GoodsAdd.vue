@@ -16,9 +16,9 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="商品条形码" prop="barCode">
-            <el-input v-model="goodsAddForm.barCode"></el-input>
-            <el-button type="success">生成条形码</el-button>        
+          <el-form-item label="商品条形码" prop="barcode">
+            <el-input v-model="goodsAddForm.barcode"></el-input>
+      
           </el-form-item>
 
           <el-form-item label="商品名称" prop="goodsname">
@@ -26,21 +26,33 @@
           </el-form-item>
 
           <el-form-item label="商品售价" prop="price">
-            <el-input v-model="goodsAddForm.price"></el-input>元
+            <el-input v-model="goodsAddForm.price"></el-input>
           </el-form-item>
 
-          <el-form-item label="市场价">
-            <el-input v-model="goodsAddForm.marketPrice"></el-input>元
+          <el-form-item label="促销价" prop="salesprice">
+            <el-input v-model="goodsAddForm.salesprice"></el-input>
+          </el-form-item>
+
+          <el-form-item label="市场价" prop="marketprice">
+            <el-input v-model="goodsAddForm.marketprice"></el-input>
             默认市场价为售价的1.2倍
           </el-form-item>
 
           <el-form-item label="商品进价">
-            <el-input v-model="goodsAddForm.purchasePrice"></el-input>元
+            <el-input v-model="goodsAddForm.purchaseprice"></el-input>
           </el-form-item>
 
-          <el-form-item label="入库数量">
-            <el-input v-model="goodsAddForm.stockNum"></el-input>
+          <el-form-item label="入库数量" prop="stocknum">
+            <el-input v-model="goodsAddForm.stocknum"></el-input>
             计重商品单位为千克
+          </el-form-item>
+
+          <el-form-item label="库存总额" prop="totalinven">
+            <el-input v-model="goodsAddForm.totalinven"></el-input>
+          </el-form-item>
+
+          <el-form-item label="销售总额" prop="totalsales">
+            <el-input v-model="goodsAddForm.totalsales"></el-input>
           </el-form-item>
 
           <el-form-item label="商品重量">
@@ -80,6 +92,7 @@
 </template>
 
 <script>
+import qs from 'qs';
 export default {
   data(){
     return{
@@ -101,14 +114,29 @@ export default {
         categories:[
           { required: true, message: "请选择所属分类", trigger: "change" }
         ],
-        barCode:[
-          { required: true, message: "请选择条形码", trigger: "blur" }
+        barcode:[
+          { required: true, message: "条形码不能为空", trigger: "blur" }
         ],
         goodsname:[
-          { required: true, message: "请选择商品名称", trigger: "blur" }
+          { required: true, message: "商品名称不能为空", trigger: "blur" }
         ],
         price:[
-          { required: true, message: "请选择商品售价", trigger: "blur" }
+          { required: true, message: "商品售价不能为空", trigger: "blur" }
+        ],
+        salesprice:[
+          { required: true, message: "促销价不能为空", trigger: "blur" }
+        ],
+        marketprice:[
+          { required: true, message: "市场价不能为空", trigger: "blur" }
+        ],
+        stocknum:[
+          { required: true, message: "库存数量不能为空", trigger: "blur" }
+        ],
+        totalinven:[
+          { required: true, message: "库存总额不能为空", trigger: "blur" }
+        ],
+        totalsales:[
+          { required: true, message: "销售总额不能为空", trigger: "blur" }
         ]
       }
     }
@@ -120,23 +148,44 @@ export default {
       this.$refs[formName].validate(valid => {
         //如果所有验证通过，valid就是true
         if (valid) {
-          alert("恭喜你,添加商品成功");
           //后续吧收集的账号和密码 一起发送给后台 验证账号和密码的正确性
           //收集账号和密码
           const params = {
-            categories: this.goodsAddForm.categories,
-            barCode: this.goodsAddForm.barCode,
+            barcode: this.goodsAddForm.barcode,            
             goodsname:this.goodsAddForm.goodsname,
+            categories: this.goodsAddForm.categories,
             price:this.goodsAddForm.price,
+            salesprice:this.goodsAddForm.salesprice,
+            marketprice:this.goodsAddForm.marketprice,
+            stocknum:this.goodsAddForm.stocknum,
+            totalinven:this.goodsAddForm.totalinven,
+            totalsales:this.goodsAddForm.totalsales
           };
-          //发送请求 把参数发给后端
-          //console.log(params);
-
-          //跳转到账号管理页面
-          this.$router.push("/goodsmanage")
+          //使用axios发送数据给后端
+          this.axios.post('http://127.0.0.1:999/goods/goodsadd',qs.stringify(params))
+           .then(response => {
+             //console.log(response.data); 
+            //接收后端传送的错误码和提示信息
+            let { error_code , reason } = response.data;
+            //根据后端响应的数据判断
+            if(error_code === 0){
+              //弹出成功的提示
+              this.$message({
+                type:"success",
+                message: reason
+              })
+              //跳转到账号管理页面
+              this.$router.push("/goodsmanage")
+            }else{
+              // 弹出失败的提示
+              this.$message.error(reason);
+            }           
+          })
+          .catch(err => {
+            console.log(err);           
+          })          
         } else {
           //否则就是false
-          alert("sorry,添加商品失败，请将必填项补全！");
           return false;
         }
       });

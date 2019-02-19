@@ -9,10 +9,10 @@
         <el-form size="mini" :model="goodsAddForm" status-icon :rules="rules" ref="goodsAddForm" label-width="100px" class="demo-ruleForm">         
           <el-form-item label="所属分类" prop="categories">
             <el-select v-model="goodsAddForm.categories" placeholder="-----选择分类-----">
-              <el-option label="家居日用" value="家居日用"></el-option>
-              <el-option label="食品" value="食品"></el-option>
-              <el-option label="电器" value="电器"></el-option>
-              <el-option label="饮料" value="饮料"></el-option>
+              <el-option label="家居日用类" value="家居日用类"></el-option>
+              <el-option label="食品类" value="食品类"></el-option>
+              <el-option label="电器类" value="电器类"></el-option>
+              <el-option label="酒水类" value="酒水类"></el-option>
             </el-select>
           </el-form-item>
 
@@ -25,42 +25,40 @@
             <el-input v-model="goodsAddForm.goodsname"></el-input>
           </el-form-item>
 
+          <el-form-item label="商品进价" prop="purchaseprice">
+            <el-input v-model="goodsAddForm.purchaseprice" @blur="autoPrice"></el-input>
+          </el-form-item>
+
           <el-form-item label="商品售价" prop="price">
-            <el-input v-model="goodsAddForm.price"></el-input>
+            <el-input v-model="goodsAddForm.price" @blur="autoPrice"></el-input>
           </el-form-item>
 
           <el-form-item label="促销价" prop="salesprice">
-            <el-input v-model="goodsAddForm.salesprice"></el-input>
+            <el-input v-model="goodsAddForm.salesprice" @blur="autoPrice"></el-input>
           </el-form-item>
 
           <el-form-item label="市场价" prop="marketprice">
-            <el-input v-model="goodsAddForm.marketprice"></el-input>
-            默认市场价为售价的1.2倍
-          </el-form-item>
-
-          <el-form-item label="商品进价">
-            <el-input v-model="goodsAddForm.purchaseprice"></el-input>
+            <el-input v-model="goodsAddForm.marketprice" @blur="autoPrice"></el-input>
           </el-form-item>
 
           <el-form-item label="入库数量" prop="stocknum">
             <el-input v-model="goodsAddForm.stocknum"></el-input>
-            计重商品单位为千克
           </el-form-item>
 
-          <el-form-item label="库存总额" prop="totalinven">
-            <el-input v-model="goodsAddForm.totalinven"></el-input>
-          </el-form-item>
-
-          <el-form-item label="销售总额" prop="totalsales">
-            <el-input v-model="goodsAddForm.totalsales"></el-input>
-          </el-form-item>
-
-          <el-form-item label="商品重量">
-            <el-input v-model="goodsAddForm.goodsWeight"></el-input>
+          <el-form-item label="销售数量" prop="salenum">
+            <el-input v-model="goodsAddForm.salenum"></el-input>
           </el-form-item>
 
           <el-form-item label="商品单位">
-            <el-input v-model="goodsAddForm.goodsUnit"></el-input>
+            <el-select v-model="goodsAddForm.goodsUnit" placeholder="-----选择单位-----">
+                <el-option label="个" value="个"></el-option>
+                <el-option label="件" value="件"></el-option>
+                <el-option label="盒" value="盒"></el-option>
+                <el-option label="斤" value="斤"></el-option>
+                <el-option label="袋" value="袋"></el-option>
+                <el-option label="瓶" value="瓶"></el-option>
+                <el-option label="箱" value="箱"></el-option>
+            </el-select>
           </el-form-item>
 
           <el-form-item label="会员优惠">
@@ -78,7 +76,7 @@
           </el-form-item>
 
           <el-form-item label="商品简介">
-            <el-input type="textarea" autosize v-model="goodsAddForm.goodsDesc"></el-input>
+            <el-input type="textarea" v-model="goodsAddForm.goodsDesc"></el-input>
             不超过200个汉字
           </el-form-item>
 
@@ -98,13 +96,14 @@ export default {
     return{
       goodsAddForm:{
         categories: "",
-        barCode: "",
+        barcode: "",
         goodsname: "",
+        purchaseprice:"",
         price:"",
-        marketPrice:"",
-        purchasePrice:"",
-        stockNum:"",
-        goodsWeight:"",
+        salesprice:"",
+        marketprice:"",
+        stocknum:"",
+        salenum:"",
         goodsUnit:"",
         memberDiscount:"享受",
         sales:"禁用",
@@ -120,6 +119,9 @@ export default {
         goodsname:[
           { required: true, message: "商品名称不能为空", trigger: "blur" }
         ],
+        purchaseprice:[
+          { required: true, message: "商品进价不能为空", trigger: "blur" }
+        ],
         price:[
           { required: true, message: "商品售价不能为空", trigger: "blur" }
         ],
@@ -132,17 +134,23 @@ export default {
         stocknum:[
           { required: true, message: "库存数量不能为空", trigger: "blur" }
         ],
-        totalinven:[
-          { required: true, message: "库存总额不能为空", trigger: "blur" }
-        ],
-        totalsales:[
-          { required: true, message: "销售总额不能为空", trigger: "blur" }
+        salenum:[
+          { required: true, message: "销售数量不能为空", trigger: "blur" }
         ]
       }
     }
     
   },
   methods:{
+    //自动填充价格
+    autoPrice(){
+      //商品售价
+      this.goodsAddForm.price = this.goodsAddForm.purchaseprice*2;
+      //促销价
+      this.goodsAddForm.salesprice = this.goodsAddForm.purchaseprice*2-2;
+      //市场价
+      this.goodsAddForm.marketprice = this.goodsAddForm.purchaseprice*3;
+    },
     onAdd(formName){
       //获取表单组件 调用验证方法
       this.$refs[formName].validate(valid => {
@@ -151,15 +159,19 @@ export default {
           //后续吧收集的账号和密码 一起发送给后台 验证账号和密码的正确性
           //收集账号和密码
           const params = {
+            categories:this.goodsAddForm.categories,
             barcode: this.goodsAddForm.barcode,            
             goodsname:this.goodsAddForm.goodsname,
-            categories: this.goodsAddForm.categories,
+            purchaseprice:this.goodsAddForm.purchaseprice,
             price:this.goodsAddForm.price,
             salesprice:this.goodsAddForm.salesprice,
             marketprice:this.goodsAddForm.marketprice,
             stocknum:this.goodsAddForm.stocknum,
-            totalinven:this.goodsAddForm.totalinven,
-            totalsales:this.goodsAddForm.totalsales
+            salenum:this.goodsAddForm.salenum,
+            goodsUnit:this.goodsAddForm.goodsUnit,
+            memberDiscount:this.goodsAddForm.memberDiscount,
+            sales:this.goodsAddForm.sales,
+            goodsDesc:this.goodsAddForm.goodsDesc
           };
           //使用axios发送数据给后端
           this.axios.post('http://127.0.0.1:999/goods/goodsadd',qs.stringify(params))

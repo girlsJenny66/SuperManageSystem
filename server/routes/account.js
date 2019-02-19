@@ -154,4 +154,36 @@ router.get('/batchdelete',(req,res) => {
   })
 })
 
+//接收验证原密码的请求
+router.get('/checkoldpwd',(req,res) => {
+  let { username,oldPwd } = req.query;
+  //构造sql
+  const sqlStr = `select * from account where username='${username}' and password='${oldPwd}'`;
+  //执行sql
+  connection.query(sqlStr,(err,data) => {
+    if (err) throw err;
+    if(data.length){
+      res.send({"error_code": 0, "reason":"原密码正确"})
+    }else{
+      res.send({"error_code": 1, "reason":"原密码错误"})
+    }
+  })
+})
+
+//接收保存修改的新密码的请求
+router.post('/saveeditnewpwd',(req,res) => {
+  let{username,oldPwd,newPwd} = req.body;
+  //创建sql
+  const sqlStr = `update account set password='${newPwd}' where username='${username}' and password='${oldPwd}'`;
+  //执行sql
+  connection.query(sqlStr,(err,data)=>{
+    if(err) throw err;
+    if(data.affectedRows>0){
+      res.send({"error_code": 0, "reason":"修改密码成功"})
+    }else{
+      res.send({"error_code": 1, "reason":"修改密码失败"})
+    }
+  })
+})
+
 module.exports = router;

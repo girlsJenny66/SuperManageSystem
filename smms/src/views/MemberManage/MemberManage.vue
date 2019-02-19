@@ -11,8 +11,8 @@
         <!-- 会员管理表单 -->
         <el-form size="mini" style="text-align:left;" :inline="true" :model="memberManageForm" class="demo-form-inline" label-position="left">
           <!-- 搜索 -->
-          <el-form-item prop="serch" label="搜索：">
-            <el-input type="text" v-model="memberManageForm.search" autocomplete="off" style="width:200px;"></el-input>会员卡，会员名，电话，手机
+          <el-form-item prop="keyword" label="搜索：">
+            <el-input type="text" v-model="memberManageForm.keyword" placeholder="请输入会员卡，会员名，电话，手机" autocomplete="off" style="width:230px;"></el-input>
           </el-form-item>
           <!-- 查询按钮 -->
           <el-form-item>
@@ -110,7 +110,9 @@ import qs from 'qs';
 export default {
   data(){
     return{
-      memberManageForm:{},
+      memberManageForm:{
+        keyword:""
+      },
       memManageTableData:[],
       selectedMember:[],
       total:0,
@@ -172,11 +174,13 @@ export default {
       //收集当前页码和每页显示条数
       let pageSize = this.pageSize;
       let currentPage = this.currentPage;
+      let keyword = this.memberManageForm.keyword;
       //发送ajax请求,把数据发送给后台
       this.axios.get('http://127.0.0.1:999/member/memberlistbypage',{
         params:{
           pageSize,
-          currentPage
+          currentPage,
+          keyword
         }
       })
       .then(response => {
@@ -214,7 +218,7 @@ export default {
     },
 
     onSubmit(){
-
+      this.getMemberListByPage();
     },
     //修改数据
     handleEdit(id){

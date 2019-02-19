@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import qs from 'qs';
 export default {
     data() {
         // 包含特殊字符的函数
@@ -109,22 +110,42 @@ export default {
             this.$refs[formName].validate((valid) => {
                 //如果所有验证通过，valid就是true
                 if (valid) {
-                    alert('恭喜你,前端验证通过,可以提交给后端');
-                    //后续吧收集的账号和密码 一起发送给后台 验证账号和密码的正确性
-                    //收集张号和密码
+                    //收集帐号和密码
                     const params = {
                         username:this.loginForm.username,
                         password:this.loginForm.password
                     }
-                    //发送请求 把参数发给后端
-                    //console.log(params);
-                    //直接跳转到后端主页
-                    this.$router.push('/');
+                    //发送请求 把参数发给后端验证账号和密码是否存在
+                    this.axios.post('http://127.0.0.1:999/login/checklogin',qs.stringify(params))
+                    .then(response => {
+                        //接收后端传过来的数据
+                        let {error_code,reason,token,username} = response.data;
+                        
+                        //判断
+                        if(error_code === 0){
+                            //把token存在浏览器的存储中
+                            window.localStorage.setItem('token',token);
+                            //把username也存在浏览器的存储中
+                            window.localStorage.setItem('username',username);
+                            //弹出成功的提示框
+                            this.$message({
+                                type:"success",
+                                message:reason
+                            })
+                            //跳转到后台首页
+                            this.$router.push('/')
+                        } else{
+                            //弹出失败的提示框
+                            this.$message.error(reason)
+                        }                    
+                    })
+                    .catch(err => {
+                        console.log(err);                    
+                    })
                     
                     
                 } else {
                     //否则就是false
-                    alert('sorry,前端验证失败！');
                     return false;
                 }
             });

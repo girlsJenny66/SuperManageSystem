@@ -10,15 +10,16 @@
           <!-- 选择分类 -->
           <el-form-item>
             <el-select v-model="goodsmanage.categories" placeholder="--请选择分类--" label-width="50px">
-              <el-option label="家居日用" value="家居日用"></el-option>
-              <el-option label="食品" value="食品"></el-option>
-              <el-option label="电器" value="电器"></el-option>
-              <el-option label="饮料" value="饮料"></el-option>
+              <el-option label="全部" value="全部"></el-option>
+              <el-option label="家居日用类" value="家居日用类"></el-option>
+              <el-option label="食品类" value="食品类"></el-option>
+              <el-option label="电器类" value="电器类"></el-option>
+              <el-option label="酒水类" value="酒水类"></el-option>
             </el-select>
           </el-form-item>
           <!-- 关键字 -->
-          <el-form-item prop="search" label="关键字">
-            <el-input type="text" v-model="goodsmanage.search" autocomplete="off"></el-input>
+          <el-form-item prop="keyword" label="关键字">
+            <el-input type="text" v-model="goodsmanage.keyword" autocomplete="off" placeholder="商品名称或条形码"></el-input>
           </el-form-item>
           <!-- 查询按钮 -->
           <el-form-item>
@@ -91,11 +92,15 @@
 
             <el-form-item label="所属分类" prop="categories">
               <el-select v-model="editForm.categories" placeholder="请选择分类">
-                <el-option label="家居日用" value="家居日用"></el-option>
-                <el-option label="食品" value="食品"></el-option>
-                <el-option label="电器" value="电器"></el-option>
-                <el-option label="饮料" value="饮料"></el-option>
+                <el-option label="家居日用类" value="家居日用类"></el-option>
+                <el-option label="食品类" value="食品类"></el-option>
+                <el-option label="电器类" value="电器类"></el-option>
+                <el-option label="酒水类" value="酒水类"></el-option>
               </el-select>
+            </el-form-item>
+
+            <el-form-item label="进价" prop="purchaseprice">
+              <el-input style="width: 217px;" v-model="editForm.purchaseprice" autocomplete="purchaseprice"></el-input>
             </el-form-item>
 
             <el-form-item label="售价" prop="price">
@@ -112,6 +117,10 @@
 
             <el-form-item label="库存" prop="stocknum">
               <el-input style="width: 217px;" v-model="editForm.stocknum" autocomplete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="销售数量" prop="salenum">
+              <el-input style="width: 217px;" v-model="editForm.salenum" autocomplete="off"></el-input>
             </el-form-item>
 
             <el-form-item label="库存总额" prop="totalinven">
@@ -139,7 +148,7 @@ export default {
     return {
       goodsmanage: {
         categories: "",
-        search:""    
+        keyword:""    
       }, 
       manageTableData: [],
       selectedGoods:[],
@@ -151,10 +160,12 @@ export default {
         barcode: "",            
         goodsname:"",
         categories: "",
+        purchaseprice:"",
         price:"",
         salesprice:"",
         marketprice:"",
         stocknum:"",
+        salenum:"",
         totalinven:"",
         totalsales:""
       },
@@ -168,6 +179,9 @@ export default {
         ],
         goodsname:[
           { required: true, message: "商品名称不能为空", trigger: "blur" }
+        ],
+        purchaseprice:[
+          { required: true, message: "商品进价不能为空", trigger: "blur" }
         ],
         price:[
           { required: true, message: "商品售价不能为空", trigger: "blur" }
@@ -200,11 +214,15 @@ export default {
       //收集当前页码和每页显示条数
       let pageSize = this.pageSize;
       let currentPage = this.currentPage;
+      let categories= this.goodsmanage.categories;
+      let keyword = this.goodsmanage.keyword
       //发送ajax请求,把数据发送给后台
       this.axios.get('http://127.0.0.1:999/goods/goodslistbypage',{
         params:{
           pageSize,
-          currentPage
+          currentPage,
+          categories,
+          keyword
         }
       })
       .then(response => {
@@ -241,8 +259,9 @@ export default {
       this.getGoodsListByPage();
     },
 
+    //查询
     onSubmit(){
-
+      this.getGoodsListByPage();
     },
     //修改数据
     handleEdit(id){
@@ -257,10 +276,12 @@ export default {
          this.editForm.barcode = resultData.barcode;
          this.editForm.goodsname = resultData.goodsname;
          this.editForm.categories = resultData.categories;
+         this.editForm.purchaseprice = resultData.purchaseprice;
          this.editForm.price = resultData.price;
          this.editForm.salesprice = resultData.salesprice;
          this.editForm.marketprice = resultData.marketprice;
          this.editForm.stocknum = resultData.stocknum;
+         this.editForm.salenum = resultData.salenum;
          this.editForm.totalinven = resultData.totalinven;
          this.editForm.totalsales = resultData.totalsales;
          

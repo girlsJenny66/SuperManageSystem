@@ -39,7 +39,7 @@ export default {
     data () {
         return{
             username:"",
-            avatarUrl:"http://127.0.0.1:8080/avatar.jpg"
+            avatarUrl:"http://172.16.9.46:8080/avatar.jpg"
         }
     },
     methods:{

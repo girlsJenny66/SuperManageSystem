@@ -259,7 +259,7 @@ export default {
       let categories= this.commodityForm.categories;
       let keyword = this.commodityForm.keyword;
       // 发送ajax请求 把分页数据发送给后端
-      this.axios.get('http://127.0.0.1:999/stock/stocklistbypage', {
+      this.axios.get('http://172.16.9.46:999/stock/stocklistbypage', {
         params: {
           pageSize,
           currentPage,
@@ -325,7 +325,7 @@ export default {
         .then(() => {
           // 发送ajax 把需要删除账号数据的id发送给后端
           this.axios
-            .get(`http://127.0.0.1:999/stock/batchdelete`, {
+            .get(`http://172.16.9.46:999/stock/batchdelete`, {
               params: {
                 selectedId
               }
@@ -378,7 +378,7 @@ export default {
         .then(() => {
           // 发送ajax 把id传给后端
           this.axios
-            .get(`http://127.0.0.1:999/stock/stockdel?id=${id}`)
+            .get(`http://172.16.9.46:999/stock/stockdel?id=${id}`)
             .then(response => {
               // 接收后端返回的错误码 和 提示信息
               let { error_code, reason } = response.data;
@@ -416,7 +416,7 @@ export default {
 
       // 发送请求 把id发送给后端
       this.axios
-        .get(`http://127.0.0.1:999/stock/stockedit?id=${id}`)
+        .get(`http://172.16.9.46:999/stock/stockedit?id=${id}`)
         .then(response => {
           // 接收后端的数据，后端返回的数据即使只有一条 也是数组
           let result = response.data[0];
@@ -452,7 +452,7 @@ export default {
       // 发送ajax请求 把新数据和原来的id一起发送给后端
       this.axios
         .post(
-          "http://127.0.0.1:999/stock/stockeditsave",
+          "http://172.16.9.46:999/stock/stockeditsave",
           qs.stringify(params)
         )
         .then(response => {

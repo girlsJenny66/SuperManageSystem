@@ -158,7 +158,7 @@ export default {
       
       if (ordernum !== "") {
         this.axios
-          .get(`http://127.0.0.1:999/sales/sales001?ordernum=${this.ordernum}`)
+          .get(`http://172.16.9.46:999/sales/sales001?ordernum=${this.ordernum}`)
           .then(response => {
             // 接收后端的数据，后端返回的数据即使只有一条 也是数组
             let result = response.data[0];
@@ -196,7 +196,7 @@ export default {
       
       // 发送ajax请求 把新数据和原来的id一起发送给后端
       this.axios
-        .post("http://127.0.0.1:999/sales/sales002", qs.stringify(params))
+        .post("http://172.16.9.46:999/sales/sales002", qs.stringify(params))
         .then(response => {
           // 接收错误码和提示信息
           let { error_code, reason } = response.data;

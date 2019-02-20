@@ -161,7 +161,7 @@ export default {
     // 请求所有账号数据的函数
     getCometList() {
       this.axios
-        .get("http://127.0.0.1:999/sales/comeList")
+        .get("http://172.16.9.46:999/sales/comeList")
         .then(response => {
           // 把后端返回的账号数据 赋值给商品出库表格数据
           this.goodsSalesTableData = response.data;
@@ -191,7 +191,7 @@ export default {
           
           // 使用axios发送数据给后端
           this.axios
-            .post("http://127.0.0.1:999/sales/come", qs.stringify(params))
+            .post("http://172.16.9.46:999/sales/come", qs.stringify(params))
             .then(response => {
               // 接收后端返回的错误码 和 提示信息
               let { error_code, reason } = response.data;

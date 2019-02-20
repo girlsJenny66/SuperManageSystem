@@ -49,7 +49,7 @@ export default {
       //获取当前登录的账户
       let username = window.localStorage.getItem('username');
       //发送请求给后端
-      this.axios.get(`http://127.0.0.1:999/account/checkoldpwd?username=${username}&oldPwd=${value}`)
+      this.axios.get(`http://172.16.9.46:999/account/checkoldpwd?username=${username}&oldPwd=${value}`)
       .then(response => {
         let {error_code,reason} = response.data;
         //判断
@@ -134,7 +134,7 @@ export default {
             newPwd: this.passwordEditForm.newPwd
           };
           //发送请求 把参数发给后端
-          this.axios.post('http://127.0.0.1:999/account/saveeditnewpwd',qs.stringify(params))
+          this.axios.post('http://172.16.9.46:999/account/saveeditnewpwd',qs.stringify(params))
           .then(response => {
             let {error_code,reason} = response.data;
             if(error_code === 0){

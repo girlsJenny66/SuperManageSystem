@@ -144,7 +144,7 @@ export default {
   methods: {
     //请求所有账号数据的函数
     // getAccountList(){
-    //   this.axios("http://127.0.0.1:999/account/accountlist")
+    //   this.axios("http://172.16.9.46:999/account/accountlist")
     //    .then(response => {
     //      //把后端返回的账号数据 赋值给用户账号数据accountData
     //      this.accountData = response.data;       
@@ -160,7 +160,7 @@ export default {
       let pageSize = this.pageSize;
       let currentPage = this.currentPage;
       //发送ajax请求,把数据发送给后台
-      this.axios.get('http://127.0.0.1:999/account/accountlistbypage',{
+      this.axios.get('http://172.16.9.46:999/account/accountlistbypage',{
         params:{
           pageSize,
           currentPage
@@ -226,7 +226,7 @@ export default {
       })
         .then(() => {
           //发送请求，将需要删除账号的id发给后端
-          this.axios.get(`http://127.0.0.1:999/account/batchdelete?id=${delId}`)
+          this.axios.get(`http://172.16.9.46:999/account/batchdelete?id=${delId}`)
           .then(response => {
             //获取后端返回的数据
             let {error_code,reason} = response.data;
@@ -268,7 +268,7 @@ export default {
       })
       .then(() => {
         //发送ajax，把id发给后端
-        this.axios.get(`http://127.0.0.1:999/account/accountdel?id=${id}`)
+        this.axios.get(`http://172.16.9.46:999/account/accountdel?id=${id}`)
         .then(response => {
           //接收后端发送的错误码和提示信息
           let {error_code,reason} = response.data;
@@ -303,7 +303,7 @@ export default {
       this.editid = id;
       
       //发送请求，将新数据和原来的id发给后端
-      this.axios.get(`http://127.0.0.1:999/account/accountedit?id=${id}`)
+      this.axios.get(`http://172.16.9.46:999/account/accountedit?id=${id}`)
        .then(response => {         
          //接收数据
          let resultData = response.data[0];
@@ -332,7 +332,7 @@ export default {
           };
           
           //发送请求，将修改的数据和原来的id一起发送给后端
-          this.axios.post('http://127.0.0.1:999/account/accounteditsave',qs.stringify(params))
+          this.axios.post('http://172.16.9.46:999/account/accounteditsave',qs.stringify(params))
           .then(response => {
             //接收后端传回来的数据
             let {error_code,reason} = response.data;

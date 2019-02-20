@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import qs from 'qs';
+import qs from 'qs'
 export default {
     data() {
         // 包含特殊字符的函数
@@ -116,7 +116,7 @@ export default {
                         password:this.loginForm.password
                     }
                     //发送请求 把参数发给后端验证账号和密码是否存在
-                    this.axios.post('http://127.0.0.1:999/login/checklogin',qs.stringify(params))
+                    this.axios.post('http://172.16.9.46:999/login/checklogin',qs.stringify(params))
                     .then(response => {
                         //接收后端传过来的数据
                         let {error_code,reason,token,username} = response.data;

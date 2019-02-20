@@ -241,7 +241,7 @@ export default {
                   phone:this.memberAddForm.phone,
               }
               //发送请求 把参数发给后端
-              this.axios.post('http://127.0.0.1:999/member/memberadd',qs.stringify(params))
+              this.axios.post('http://172.16.9.46:999/member/memberadd',qs.stringify(params))
                .then(response => {
                 //接收后端传送的错误码和提示信息
                 let { error_code , reason } = response.data;

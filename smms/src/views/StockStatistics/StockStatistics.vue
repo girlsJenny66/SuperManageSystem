@@ -30,12 +30,12 @@ export default {
                 show: true
             },
             legend: {
-                data:['销量']
+                data:['进货量']
             },
             xAxis : [
                 {
                     type : 'category',
-                    data : ["家居日用类","食品类","电器类","饮料类"]
+                    data : ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
                 }
             ],
             yAxis : [
@@ -45,7 +45,7 @@ export default {
             ],
             series : [
                 {
-                    "name":"销量",
+                    "name":"进货量",
                     "type":"line",
                     "data":[] // 没有数据
                 }
@@ -56,11 +56,11 @@ export default {
         myChart.setOption(option);  
 
         // 发送ajax给后端 获取到一份销量数据
-        let sales = [3600, 2000, 3200, 1080];
+        let sales = [3600, 2000, 3200, 1080,1100,4000,2100,3000,3200, 1080,1100,4600];
         myChart.setOption({  
              series : [
                 {
-                    "name":"销量",
+                    "name":"进货量",
                     "data":sales
                 }
             ]
@@ -74,10 +74,10 @@ export default {
 .stock-statistics{
     .el-card {
         .el-card__header {
-        text-align-last: left;
-        font-size: 18px;
-        font-weight: 600;
-        background-color: #f1f1f1;
+            text-align-last: left;
+            font-size: 18px;
+            font-weight: 600;
+            background-color: #f1f1f1;
         }
     }
 }

@@ -133,7 +133,7 @@ export default {
           };
 
           //使用axios发送数据给后端
-          this.axios.post('http://127.0.0.1:999/account/accountadd',qs.stringify(params))
+          this.axios.post('http://172.16.9.46:999/account/accountadd',qs.stringify(params))
            .then(response => {
              //console.log(response.data); 
              //接收后端传送的错误码和提示信息

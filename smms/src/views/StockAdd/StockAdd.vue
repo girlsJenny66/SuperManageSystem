@@ -145,7 +145,7 @@ export default {
 
           // 使用axios发送数据给后端
           this.axios
-            .post("http://127.0.0.1:999/stock/stockadd", qs.stringify(params))
+            .post("http://172.16.9.46:999/stock/stockadd", qs.stringify(params))
             .then(response => {
               // 接收后端返回的错误码 和 提示信息
               let { error_code, reason } = response.data;

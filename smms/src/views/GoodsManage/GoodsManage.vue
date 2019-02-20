@@ -217,7 +217,7 @@ export default {
       let categories= this.goodsmanage.categories;
       let keyword = this.goodsmanage.keyword
       //发送ajax请求,把数据发送给后台
-      this.axios.get('http://127.0.0.1:999/goods/goodslistbypage',{
+      this.axios.get('http://172.16.9.46:999/goods/goodslistbypage',{
         params:{
           pageSize,
           currentPage,
@@ -268,7 +268,7 @@ export default {
       //保存要修改的id
       this.editid = id;
       //发送请求
-      this.axios.get(`http://127.0.0.1:999/goods/goodsedit?id=${id}`)
+      this.axios.get(`http://172.16.9.46:999/goods/goodsedit?id=${id}`)
       .then(response=>{
         //接收数据
          let resultData = response.data[0];
@@ -311,7 +311,7 @@ export default {
             editid: this.editid
           };
           //发送请求，将修改的数据和原来的id一起发送给后端
-          this.axios.post('http://127.0.0.1:999/goods/goodseditsave',qs.stringify(params))
+          this.axios.post('http://172.16.9.46:999/goods/goodseditsave',qs.stringify(params))
           .then(response => {
             //接收后端传回来的数据
             let {error_code,reason} = response.data;
@@ -345,7 +345,7 @@ export default {
       })
       .then(() => {
         //发送ajax，把id发给后端
-        this.axios.get(`http://127.0.0.1:999/goods/goodsdel?id=${id}`)
+        this.axios.get(`http://172.16.9.46:999/goods/goodsdel?id=${id}`)
         .then(response => {
           //接收后端发送的错误码和提示信息
           let {error_code,reason} = response.data;
@@ -398,7 +398,7 @@ export default {
       })
       .then(() => {
         //发送请求，将需要删除账号的id发给后端
-        this.axios.get(`http://127.0.0.1:999/goods/batchdelete?id=${delId}`)
+        this.axios.get(`http://172.16.9.46:999/goods/batchdelete?id=${delId}`)
         .then(response => {
           //获取后端返回的数据
           let {error_code,reason} = response.data;

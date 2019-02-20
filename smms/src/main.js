@@ -20,7 +20,7 @@ import '@/styles/common.less'
 //注册elementui
 Vue.use(ElementUI);
 
-//把axios挂在Vue的原型上,所有vue的实例对象共享
+// 把axios挂在Vue的原型上 所有vue的实例对象共享
 Vue.prototype.axios = axios;
 
 //全局路由守卫，拦截所有路由

@@ -35,7 +35,7 @@ export default {
             xAxis : [
                 {
                     type : 'category',
-                    data : ["家居日用类","食品类","电器类","饮料类"]
+                    data : ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
                 }
             ],
             yAxis : [
@@ -56,7 +56,7 @@ export default {
         myChart.setOption(option);  
 
         // 发送ajax给后端 获取到一份销量数据
-        let sales = [600, 1000, 3200, 980];
+        let sales = [3000, 1000, 3200, 980,2400,1000,1500, 3200, 980,2400,1000,4000];
         myChart.setOption({  
              series : [
                 {

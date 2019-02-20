@@ -40,10 +40,10 @@
           <el-table-column label="管理">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleEdit(scope.row.id)">
-                <i class="el-icon-edit"></i>
+                <i class="el-icon-edit"></i>编辑
               </el-button>
               <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">
-                <i class="el-icon-delete"></i>
+                <i class="el-icon-delete"></i>删除
               </el-button>
             </template>
           </el-table-column>
@@ -160,7 +160,7 @@ export default {
   methods:{
     //请求所有会员数据的函数
     // getMemberList(){
-    //   this.axios("http://127.0.0.1:999/member/memberlist")
+    //   this.axios("http://172.16.9.46:999/member/memberlist")
     //    .then(response => {
     //      //把后端返回的会员数据 赋值给会员管理表格
     //      this.memManageTableData = response.data;       
@@ -176,7 +176,7 @@ export default {
       let currentPage = this.currentPage;
       let keyword = this.memberManageForm.keyword;
       //发送ajax请求,把数据发送给后台
-      this.axios.get('http://127.0.0.1:999/member/memberlistbypage',{
+      this.axios.get('http://172.16.9.46:999/member/memberlistbypage',{
         params:{
           pageSize,
           currentPage,
@@ -225,7 +225,7 @@ export default {
       //保存要修改的id
       this.editid = id;
       //发送请求
-      this.axios.get(`http://127.0.0.1:999/member/memberedit?id=${id}`)
+      this.axios.get(`http://172.16.9.46:999/member/memberedit?id=${id}`)
       .then(response=>{
         //接收数据
          let resultData = response.data[0];
@@ -258,7 +258,7 @@ export default {
             editid: this.editid
           };
           //发送请求，将修改的数据和原来的id一起发送给后端
-          this.axios.post('http://127.0.0.1:999/member/membereditsave',qs.stringify(params))
+          this.axios.post('http://172.16.9.46:999/member/membereditsave',qs.stringify(params))
           .then(response => {
             //接收后端传回来的数据
             let {error_code,reason} = response.data;
@@ -292,7 +292,7 @@ export default {
       })
       .then(() => {
         //发送ajax，把id发给后端
-        this.axios.get(`http://127.0.0.1:999/member/memberdel?id=${id}`)
+        this.axios.get(`http://172.16.9.46:999/member/memberdel?id=${id}`)
         .then(response => {
           //接收后端发送的错误码和提示信息
           let {error_code,reason} = response.data;
@@ -345,7 +345,7 @@ export default {
       })
       .then(() => {
         //发送请求，将需要删除账号的id发给后端
-        this.axios.get(`http://127.0.0.1:999/member/batchdelete?id=${delId}`)
+        this.axios.get(`http://172.16.9.46:999/member/batchdelete?id=${delId}`)
         .then(response => {
           //获取后端返回的数据
           let {error_code,reason} = response.data;

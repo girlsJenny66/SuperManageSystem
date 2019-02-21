@@ -4,12 +4,33 @@ const router = express.Router();
 //引入连接数据库模块
 const connection = require('./connect');
 
+// 引入express-jwt 用于验证token
+const expressJwt = require('express-jwt');
+//定义秘钥
+const secretKey = 'pwdkey';
+
 // 统一设置响应头 解决跨域问题
 router.all('*', (req, res, next) => {
   // 设置响应头,解决跨域
   res.header('Access-Control-Allow-Origin', '*');
+  // 允许的请求头
+  res.header("Access-Control-Allow-Headers", "authorization");
   next();
 })
+
+// 使用模块 express-jwt 验证token
+router.use(expressJwt ({
+  secret: secretKey 
+}));
+
+//拦截器
+router.use( (err, req, res, next) => {
+  //当token验证失败时会抛出如下错误
+  if (err.name === 'UnauthorizedError') {   
+      //这个需要根据自己的业务逻辑来处理
+      res.status(401).send('token无效...');
+  }
+});
 
 //添加账号的路由
 router.post('/accountadd' , (req, res) => {

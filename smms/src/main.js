@@ -23,6 +23,15 @@ Vue.use(ElementUI);
 // 把axios挂在Vue的原型上 所有vue的实例对象共享
 Vue.prototype.axios = axios;
 
+// 写一个axios的请求拦截器 （在axios请求发送之前）
+axios.interceptors.request.use((config) => {
+  // 获取token
+  const token = window.localStorage.getItem('token');
+  // 在请求头中携带token
+  config.headers.authorization = `Bearer ${token}` 
+  return config;
+})
+
 //全局路由守卫，拦截所有路由
 router.beforeEach((to,from,next) => {
   //获取token

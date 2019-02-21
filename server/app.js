@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 //引入子路由
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var accountRouter = require('./routes/account');
 var memberRouter = require('./routes/member');
 var goodsRouter = require('./routes/goods');
@@ -27,8 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //分配路由
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/account', accountRouter);
 app.use('/member', memberRouter);
 app.use('/goods', goodsRouter);
